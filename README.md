@@ -1,4 +1,116 @@
-## Problem: Design a Payment Processing System
+## Problem 1: Animal
+
+Here's a beginner-friendly version of the same assignment — simpler domain, fewer moving parts, but it still tests the core decision-making skill.
+
+---
+
+## Problem: Design a Simple Animal Shelter System
+
+You're building a small program to manage animals in an animal shelter. You need to model **Dog**, **Cat**, and **Bird**.
+
+### Requirements
+
+1. **Every animal** must be able to:
+   - `eat()` — print a message like `"Buddy is eating"`
+   - `makeSound()` — each animal makes a different sound (bark, meow, chirp), so there's no single shared way to do this
+
+2. **Every animal shares identical logic** for:
+   - `sleep()` — always prints `"[name] is sleeping"` (exactly the same for every animal — no need to write this more than once)
+   - Every animal also has a `name` field, set once when the animal is created
+
+3. **Some animals can fly** (Bird can, Dog and Cat cannot). Flying isn't related to being an animal — it's a separate ability.
+
+4. **Some animals can swim** (Dog can swim, Bird and Cat cannot — let's assume cats don't swim in this shelter's world).
+
+---
+
+### Your Tasks
+
+**Part A — Decide the design**
+For this system, decide:
+- Should `Animal` be an **abstract class** or an **interface**? Why?
+- Should `Swimmer` and `Flyer` be **abstract classes** or **interfaces**? Why?
+
+**Part B — Write the code**
+Implement in Java:
+- `Animal` (abstract class) with:
+  - a `name` field
+  - a constructor that sets `name`
+  - concrete method `sleep()`
+  - abstract method `makeSound()`
+- `Swimmer` interface with method `swim()`
+- `Flyer` interface with method `fly()`
+- Classes `Dog`, `Cat`, `Bird` that extend `Animal` and implement the correct interfaces
+
+**Part C — Answer in 1–2 sentences**
+1. Why can't `Dog extends Animal, Swimmer` work in Java (i.e. why can a class only `extends` one class)?
+2. Why does `sleep()` belong in `Animal` instead of being copy-pasted into `Dog`, `Cat`, and `Bird` separately?
+3. Why is `makeSound()` marked abstract instead of given a shared implementation like `sleep()`?
+
+---
+
+### Starter hint (to guide beginners)
+
+```java
+abstract class Animal {
+    String name;
+
+    Animal(String name) {
+        this.name = name;
+    }
+
+    void sleep() {
+        System.out.println(name + " is sleeping");
+    }
+
+    abstract void makeSound(); // no shared behavior possible — every animal differs
+}
+
+interface Swimmer {
+    void swim();
+}
+
+interface Flyer {
+    void fly();
+}
+
+class Dog extends Animal implements Swimmer {
+    Dog(String name) {
+        super(name);
+    }
+
+    void makeSound() {
+        System.out.println(name + " says Woof!");
+    }
+
+    public void swim() {
+        System.out.println(name + " is swimming");
+    }
+}
+```
+
+Students then complete `Cat` (no extra interface) and `Bird` (implements `Flyer`), plus a `Main` class that creates one of each and calls all their methods.
+
+---
+
+### Simple decision table to give students
+
+| Question to ask | If yes → use |
+|---|---|
+| Do all these classes share the exact same working code? | Abstract class |
+| Is this describing what the object fundamentally **is**? | Abstract class |
+| Is this an optional **ability**, not every subtype has it? | Interface |
+| Does a class need this ability **plus** another unrelated ability? | Interface (since a class can implement many interfaces but extend only one class) |
+
+---
+
+### Why this version works well for beginners
+- Only 3 concrete classes, 1 abstract class, 2 tiny interfaces — small enough to hold in your head.
+- Every requirement maps directly and obviously to a rule (shared code → abstract class, optional ability → interface), so the reasoning is easy to spot without prior design experience.
+- The starter code removes syntax friction, so the assessment focuses on **the decision**, not Java mechanics.
+
+- 
+## Problem 2: Design a Payment Processing System
 
 Your company is building a payment processing system for an e-commerce platform. You need to model the following requirements:
 
